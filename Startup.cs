@@ -5,8 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Api.Data;
-using Api.Models;
-using Microsoft.Extensions.Options;
 using System;
 using System.Threading;
 using System.Text.Json;
@@ -64,13 +62,6 @@ namespace Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
-                var optionsBuilder = new DbContextOptionsBuilder<AdmContext>();
-                optionsBuilder.UseNpgsql(_admConnectionString);
-                using (var context = new AdmContext(optionsBuilder.Options))
-                {
-                    context.Database.Migrate();
-                }
             }
             app.UseCors(_allowSpecificOrigins);
             try
@@ -96,6 +87,13 @@ namespace Api
             catch (Exception e)
             {
                 Console.WriteLine("An error occurred when trying to connect to database. Error: {}.", e);
+            }
+
+            var optionsBuilder = new DbContextOptionsBuilder<AdmContext>();
+            optionsBuilder.UseNpgsql(_admConnectionString);
+            using (var context = new AdmContext(optionsBuilder.Options))
+            {
+                context.Database.Migrate();
             }
 
             app.UseHttpsRedirection();
