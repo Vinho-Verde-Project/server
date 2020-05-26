@@ -15,10 +15,10 @@ namespace Api.Models
         public string Batch { get; set; }
 
         [Required]
-        public DateTime ProductionDate { get; set; }
+        public String ProductionDate { get; set; }
 
         [Required]
-        public DateTime ShelfLife { get; set; }
+        public String ShelfLife { get; set; }
 
         public int CategoryId { get; set; }
 

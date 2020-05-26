@@ -11,12 +11,12 @@ namespace Api.Data
         Task<IEnumerable<Employee>> GetAllAsync();
         Task<Employee> GetAsync(int id);
         System.Threading.Tasks.Task CommitAsync();
-        void Insert(Employee Employee);
+        Employee AddEmployee(Employee employee);
         System.Threading.Tasks.Task HasEmailAsync(string email);
         Task<Employee> GetByEmailAsync(string email);
         Task<Employee> GetByEmailPasswordAsync(string email, string password);
-        void Update(Employee Employee);
-        void Delete(Employee Employee);
+        Employee Update(Employee employee);
+        void Delete(Employee employee);
     }
     public class EmployeeData : IEmployeeData
     {
@@ -69,9 +69,11 @@ namespace Api.Data
                 throw new UnauthorizedAccessException();
         }
 
-        public void Insert(Employee Employee)
+        public Employee AddEmployee(Employee employee)
         {
-            _databaseContext.Employees.Add(Employee);
+            _databaseContext.Employees.Add(employee);
+            _databaseContext.SaveChanges();
+            return employee;
         }
 
         public async Task<Employee> GetByEmailPasswordAsync(string email,
@@ -90,14 +92,17 @@ namespace Api.Data
                 throw new UnauthorizedAccessException();
         }
 
-        public void Update(Employee Employee)
+        public Employee Update(Employee employee)
         {
-            _databaseContext.Employees.Update(Employee);
+            _databaseContext.Employees.Update(employee);
+            _databaseContext.SaveChanges();
+            return employee;
         }
 
-        public void Delete(Employee Employee)
+        public void Delete(Employee employee)
         {
-            _databaseContext.Employees.Remove(Employee);
+            _databaseContext.Employees.Remove(employee);
+            _databaseContext.SaveChanges();
         }
     }
 }

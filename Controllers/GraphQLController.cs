@@ -1,44 +1,39 @@
+using System.Linq;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
 using Api.Models;
-using System;
+using Newtonsoft.Json;
 
 namespace Api.Controllers
 {
-    [Route("graphql")]
-    [ApiController]
-    public class GraphQLController : Controller
-    {
-        private readonly Schema _schema;
+   [Route("graphql")]
+   [ApiController]
+   public class GraphQLController : Controller
+   {
+      private readonly ISchema _schema;
 
-        public GraphQLController(Schema schema) => _schema = schema;
+      public GraphQLController(ISchema schema)
+      {
+         _schema = schema;
+      }
 
-        public async Task<IActionResult> Post([FromBody] GraphQLQuery query)
-        {
-            if (query == null) { throw new ArgumentNullException(nameof(query)); }
-            var inputs = query.Variables.ToInputs();
+      [HttpPost]
+      public async Task<IActionResult> Post([FromBody] GraphQLQueryDto query)
+      {
+         var result = await new DocumentExecuter().ExecuteAsync(_ =>
+         {
+            _.Schema = _schema;
+            _.Query = query.Query;
+            _.Inputs = query.Variables?.ToInputs();
+         }).ConfigureAwait(false);
 
-            //var schema = new Schema
-            //{
-            // Query = new UserQuery(_db)
-            //};
-
-            var result = await new DocumentExecuter().ExecuteAsync(_ =>
-            {
-                _.Schema = _schema;
-                _.Query = query.Query;
-                _.OperationName = query.OperationName;
-                _.Inputs = inputs;
-            });
-
-            if (result.Errors?.Count > 0)
-            {
-                return BadRequest();
-            }
-
-            return Ok(result);
-        }
-    }
+         if (result.Errors?.Count > 0)
+         {
+            return Problem(detail: result.Errors.Select(_ => _.Message).FirstOrDefault(), statusCode: 500);
+         }
+         return Ok(result.Data);
+      }
+   }
 }

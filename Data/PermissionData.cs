@@ -11,9 +11,9 @@ namespace Api.Data
         Task<IEnumerable<Permission>> GetAllAsync();
         Task<Permission> GetAsync(int id);
         System.Threading.Tasks.Task CommitAsync();
-        void Insert(Permission Permission);
-        void Update(Permission Permission);
-        void Delete(Permission Permission);
+        Permission AddPermission(Permission permission);
+        Permission Update(Permission permission);
+        void Delete(Permission permission);
     }
     public class PermissionData : IPermissionData
     {
@@ -41,19 +41,24 @@ namespace Api.Data
             return await _databaseContext.Permissions.ToListAsync();
         }
 
-        public void Insert(Permission Permission)
+        public Permission AddPermission(Permission permission)
         {
-            _databaseContext.Permissions.Add(Permission);
+            _databaseContext.Permissions.Add(permission);
+            _databaseContext.SaveChanges();
+            return permission;
         }
 
-        public void Update(Permission Permission)
+        public Permission Update(Permission permission)
         {
-            _databaseContext.Permissions.Update(Permission);
+            _databaseContext.Permissions.Update(permission);
+            _databaseContext.SaveChanges();
+            return permission;
         }
 
-        public void Delete(Permission Permission)
+        public void Delete(Permission permission)
         {
-            _databaseContext.Permissions.Remove(Permission);
+            _databaseContext.Permissions.Remove(permission);
+            _databaseContext.SaveChanges();
         }
     }
 }
