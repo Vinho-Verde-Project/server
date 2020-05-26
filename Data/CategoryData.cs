@@ -11,9 +11,11 @@ namespace Api.Data
         Task<IEnumerable<Category>> GetAllAsync();
         Task<Category> GetAsync(int id);
         System.Threading.Tasks.Task CommitAsync();
+
         Category AddCategory(Category category);
         Category Update(Category category);
         void Delete(Category category);
+
     }
     public class CategoryData : ICategoryData
     {
@@ -32,7 +34,6 @@ namespace Api.Data
         public async Task<Category> GetAsync(int id)
         {
             return await _databaseContext.Categories
-                .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
@@ -59,6 +60,7 @@ namespace Api.Data
         {
             _databaseContext.Categories.Remove(category);
             _databaseContext.SaveChanges();
+
         }
     }
 }
