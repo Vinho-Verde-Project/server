@@ -38,6 +38,19 @@ namespace Api.GraphQLTypes
                return _employeeData.GetAsync(id);
             });
 
+         Field<EmployeeType>("employeeEmail",
+            arguments: new QueryArguments
+            {
+               new QueryArgument<StringGraphType> { Name = "email" },
+               new QueryArgument<StringGraphType> { Name = "password" }
+            }, 
+            resolve: context =>
+            {
+               string email = context.GetArgument<string>("email");
+               string password = context.GetArgument<string>("password");
+               return _employeeData.GetByEmailPasswordAsync(email,password);
+            });
+
 
 //ROLES
          Field<ListGraphType<RoleType>>("roles", resolve: context =>

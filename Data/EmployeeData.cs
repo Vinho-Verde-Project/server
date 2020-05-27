@@ -79,17 +79,17 @@ namespace Api.Data
         public async Task<Employee> GetByEmailPasswordAsync(string email,
                                                             string password)
         {
-            Employee a = await _databaseContext.Employees
+            return await _databaseContext.Employees
                 .AsNoTracking()
                 .FirstOrDefaultAsync(
                     c => c.Email == email &&
                     c.HashedPassword == password
                 );
 
-            if (a != null)
-                return a;
-            else
-                throw new UnauthorizedAccessException();
+            // if (a != null)
+            //     return a;
+            // else
+            //     throw new UnauthorizedAccessException();
         }
 
         public Employee Update(Employee employee)
