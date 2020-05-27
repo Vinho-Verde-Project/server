@@ -11,9 +11,9 @@ namespace Api.Data
         Task<IEnumerable<Models.Task>> GetAllAsync();
         Task<Models.Task> GetAsync(int id);
         System.Threading.Tasks.Task CommitAsync();
-        void Insert(Models.Task Task);
-        void Update(Models.Task Task);
-        void Delete(Models.Task Task);
+        Models.Task AddTask(Models.Task task);
+        Models.Task Update(Models.Task task);
+        void Delete(Models.Task task);
     }
     public class TaskData : ITaskData
     {
@@ -40,19 +40,24 @@ namespace Api.Data
             return await _databaseContext.Tasks.ToListAsync();
         }
 
-        public void Insert(Models.Task Task)
+        public Models.Task AddTask(Models.Task task)
         {
-            _databaseContext.Tasks.Add(Task);
+            _databaseContext.Tasks.Add(task);
+            _databaseContext.SaveChanges();
+            return task;
         }
 
-        public void Update(Models.Task Task)
+        public Models.Task Update(Models.Task task)
         {
-            _databaseContext.Tasks.Update(Task);
+            _databaseContext.Tasks.Update(task);
+            _databaseContext.SaveChanges();
+            return task;
         }
 
-        public void Delete(Models.Task Task)
+        public void Delete(Models.Task task)
         {
-            _databaseContext.Tasks.Remove(Task);
+            _databaseContext.Tasks.Remove(task);
+            _databaseContext.SaveChanges();
         }
     }
 }

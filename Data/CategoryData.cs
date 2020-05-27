@@ -11,9 +11,11 @@ namespace Api.Data
         Task<IEnumerable<Category>> GetAllAsync();
         Task<Category> GetAsync(int id);
         System.Threading.Tasks.Task CommitAsync();
-        void Insert(Category Category);
-        void Update(Category Category);
-        void Delete(Category Category);
+
+        Category AddCategory(Category category);
+        Category Update(Category category);
+        void Delete(Category category);
+
     }
     public class CategoryData : ICategoryData
     {
@@ -40,19 +42,25 @@ namespace Api.Data
             return await _databaseContext.Categories.ToListAsync();
         }
 
-        public void Insert(Category Category)
+        public Category AddCategory(Category category)
         {
-            _databaseContext.Categories.Add(Category);
+            _databaseContext.Categories.Add(category);
+            _databaseContext.SaveChanges();
+            return category;
         }
 
-        public void Update(Category Category)
+        public Category Update(Category category)
         {
-            _databaseContext.Categories.Update(Category);
+            _databaseContext.Categories.Update(category);
+            _databaseContext.SaveChanges();
+            return category;
         }
 
-        public void Delete(Category Category)
+        public void Delete(Category category)
         {
-            _databaseContext.Categories.Remove(Category);
+            _databaseContext.Categories.Remove(category);
+            _databaseContext.SaveChanges();
+
         }
     }
 }

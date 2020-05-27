@@ -11,9 +11,9 @@ namespace Api.Data
         Task<IEnumerable<Role>> GetAllAsync();
         Task<Role> GetAsync(int id);
         System.Threading.Tasks.Task CommitAsync();
-        void Insert(Role Role);
-        void Update(Role Role);
-        void Delete(Role Role);
+        Role AddRole(Role role);
+        Role Update(Role role);
+        void Delete(Role role);
     }
     public class RoleData : IRoleData
     {
@@ -42,19 +42,24 @@ namespace Api.Data
             return await _databaseContext.Roles.ToListAsync();
         }
 
-        public void Insert(Role Role)
+        public Role AddRole(Role role)
         {
-            _databaseContext.Roles.Add(Role);
+            _databaseContext.Roles.Add(role);
+            _databaseContext.SaveChanges();
+            return role;
         }
 
-        public void Update(Role Role)
+        public Role Update(Role role)
         {
-            _databaseContext.Roles.Update(Role);
+            _databaseContext.Roles.Update(role);
+            _databaseContext.SaveChanges();
+            return role;
         }
 
-        public void Delete(Role Role)
+        public void Delete(Role role)
         {
-            _databaseContext.Roles.Remove(Role);
+            _databaseContext.Roles.Remove(role);
+            _databaseContext.SaveChanges();
         }
     }
 }
