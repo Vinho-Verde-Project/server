@@ -12,10 +12,7 @@ namespace Api.GraphQLTypes
          Field(_ => _.ProductionDate);
          Field(_ => _.ShelfLife);
          Field(_ => _.CategoryId);
-         Field(_ => _.Category);
          Field(_ => _.TaskId);
-         Field(_ => _.Task);
-         Field(_ => _.StockWines);
       }
    }
 
@@ -29,10 +26,7 @@ namespace Api.GraphQLTypes
          Field(_ => _.ProductionDate);
          Field(_ => _.ShelfLife);
          Field(_ => _.CategoryId);
-         Field(_ => _.Category);
          Field(_ => _.TaskId);
-         Field(_ => _.Task);
-         Field(_ => _.StockWines);
       }
    }
 

@@ -11,9 +11,9 @@ namespace Api.Data
         Task<IEnumerable<Stock>> GetAllAsync();
         Task<Stock> GetAsync(int id);
         System.Threading.Tasks.Task CommitAsync();
-        void Insert(Stock Stock);
-        void Update(Stock Stock);
-        void Delete(Stock Stock);
+        Stock AddStock(Stock stock);
+        Stock Update(Stock stock);
+        void Delete(Stock stock);
     }
     public class StockData : IStockData
     {
@@ -45,19 +45,24 @@ namespace Api.Data
             return await _databaseContext.Stocks.ToListAsync();
         }
 
-        public void Insert(Stock Stock)
+        public Stock AddStock(Stock stock)
         {
-            _databaseContext.Stocks.Add(Stock);
+            _databaseContext.Stocks.Add(stock);
+            _databaseContext.SaveChanges();
+            return stock;
         }
 
-        public void Update(Stock Stock)
+        public Stock Update(Stock stock)
         {
-            _databaseContext.Stocks.Update(Stock);
+            _databaseContext.Stocks.Update(stock);
+            _databaseContext.SaveChanges();
+            return stock;
         }
 
-        public void Delete(Stock Stock)
+        public void Delete(Stock stock)
         {
-            _databaseContext.Stocks.Remove(Stock);
+            _databaseContext.Stocks.Remove(stock);
+            _databaseContext.SaveChanges();
         }
     }
 }

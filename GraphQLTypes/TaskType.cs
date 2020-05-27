@@ -14,7 +14,7 @@ namespace Api.GraphQLTypes
       }
    }
 
-   public class InputTaskType:ObjectGraphType<Task>
+   public class InputTaskType: InputObjectGraphType<Task>
    {
       public InputTaskType()
       {

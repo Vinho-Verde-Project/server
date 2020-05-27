@@ -66,6 +66,14 @@ namespace Api
          services.AddSingleton<InputTaskType>();
          services.AddSingleton<CategoryType>();
          services.AddSingleton<InputCategoryType>();
+         services.AddSingleton<StockType>();
+         services.AddSingleton<InputStockType>();
+         services.AddSingleton<StepType>();
+         services.AddSingleton<InputStepType>();
+         services.AddSingleton<WineType>();
+         services.AddSingleton<InputWineType>();
+         services.AddSingleton<ProductType>();
+         services.AddSingleton<InputProductType>();
 
          services.AddScoped<ICategoryData, CategoryData>();
          services.AddScoped<IEmployeeData, EmployeeData>();
@@ -74,6 +82,8 @@ namespace Api
          services.AddScoped<IStepData, StepData>();
          services.AddScoped<ITaskData, TaskData>();
          services.AddScoped<IWineData, WineData>();
+         services.AddScoped<IStockData, StockData>();
+         services.AddScoped<IProductData, ProductData>();
          services.AddScoped<RootQuery>();
          services.AddScoped<RootMutation>();
          services.AddScoped<IDependencyResolver>(_ => new FuncDependencyResolver(_.GetRequiredService));
