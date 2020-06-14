@@ -10,14 +10,22 @@ namespace Api.GraphQLTypes
          Field(_ => _.Id);
          Field(_ => _.Desc);
          Field(_ => _.CategoryId);
-         Field(_ => _.Category);
          Field(_ => _.Type);
          Field(_ => _.StepId);
-         Field(_ => _.Step);
-         Field(_ => _.StockProducts);
-         Field(_ => _.ProductCategories);
 
       }
    }
 
+      public class InputProductType:InputObjectGraphType<Product>
+   {
+      public InputProductType()
+      {
+         Name = "InputProductType";
+         Field(_ => _.Id);
+         Field(_ => _.Desc);
+         Field(_ => _.CategoryId);
+         Field(_ => _.Type);
+         Field(_ => _.StepId);
+      }
+   }
 }

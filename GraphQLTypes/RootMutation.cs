@@ -1,6 +1,7 @@
 using GraphQL.Types;
 using Api.Models;
 using Api.Data;
+using System;
 
 namespace Api.GraphQLTypes
 {
@@ -27,7 +28,11 @@ namespace Api.GraphQLTypes
                            IRoleData roleData,
                            IPermissionData permissionData,
                            ITaskData taskData,
-                           ICategoryData categoryData)
+                           ICategoryData categoryData,
+                           IStockData stockData,
+                           IStepData stepData,
+                           IWineData wineData,
+                           IProductData productData)
       {
 // EMPLOYEE
          Field<EmployeeType>(
@@ -46,9 +51,9 @@ namespace Api.GraphQLTypes
 
          Field<EmployeeType>(
             "updateEmployee",
-            arguments: new QueryArguments(
+            arguments: new QueryArguments{
                new QueryArgument<InputEmployeeType>(){ Name = "employee"}
-            ),
+            },
             resolve: context =>
             {
                var employee = context.GetArgument<Employee>("employee");
@@ -58,9 +63,9 @@ namespace Api.GraphQLTypes
 
          Field<EmployeeType>(
             "deleteEmployee",
-            arguments: new QueryArguments(
+            arguments: new QueryArguments{
                new QueryArgument<InputEmployeeType>(){ Name = "employee"}
-            ),
+            },
             resolve: context =>
             {
                var employee = context.GetArgument<Employee>("employee");
@@ -88,9 +93,9 @@ namespace Api.GraphQLTypes
 
          Field<RoleType>(
             "updateRole",
-            arguments: new QueryArguments(
+            arguments: new QueryArguments{
                new QueryArgument<InputRoleType>(){ Name = "role"}
-            ),
+            },
             resolve: context =>
             {
                var role = context.GetArgument<Role>("role");
@@ -100,9 +105,9 @@ namespace Api.GraphQLTypes
 
          Field<RoleType>(
             "deleteRole",
-            arguments: new QueryArguments(
+            arguments: new QueryArguments{
                new QueryArgument<InputRoleType>(){ Name = "role"}
-            ),
+            },
             resolve: context =>
             {
                var role = context.GetArgument<Role>("role");
@@ -129,9 +134,9 @@ namespace Api.GraphQLTypes
 
          Field<PermissionType>(
             "updatePermission",
-            arguments: new QueryArguments(
+            arguments: new QueryArguments{
                new QueryArgument<InputPermissionType>(){ Name = "permission"}
-            ),
+            },
             resolve: context =>
             {
                var permission = context.GetArgument<Permission>("permission");
@@ -141,9 +146,9 @@ namespace Api.GraphQLTypes
 
          Field<PermissionType>(
             "deletePermission",
-            arguments: new QueryArguments(
+            arguments: new QueryArguments{
                new QueryArgument<InputPermissionType>(){ Name = "permission"}
-            ),
+            },
             resolve: context =>
             {
                var permission = context.GetArgument<Permission>("permission");
@@ -165,15 +170,14 @@ namespace Api.GraphQLTypes
             {
                var task = context.GetArgument<Task>("task");
                return taskData.AddTask(task);
-               
             }
          );
 
          Field<TaskType>(
             "updateTask",
-            arguments: new QueryArguments(
+            arguments: new QueryArguments{
                new QueryArgument<InputTaskType>(){ Name = "task"}
-            ),
+            },
             resolve: context =>
             {
                var task = context.GetArgument<Task>("task");
@@ -183,9 +187,9 @@ namespace Api.GraphQLTypes
 
          Field<TaskType>(
             "deleteTask",
-            arguments: new QueryArguments(
+            arguments: new QueryArguments{
                new QueryArgument<InputTaskType>(){ Name = "task"}
-            ),
+            },
             resolve: context =>
             {
                var task = context.GetArgument<Task>("task");
@@ -213,9 +217,9 @@ namespace Api.GraphQLTypes
 
          Field<CategoryType>(
             "updateCategory",
-            arguments: new QueryArguments(
+            arguments: new QueryArguments{
                new QueryArgument<InputCategoryType>(){ Name = "category"}
-            ),
+            },
             resolve: context =>
             {
                var category = context.GetArgument<Category>("category");
@@ -225,9 +229,9 @@ namespace Api.GraphQLTypes
 
          Field<CategoryType>(
             "deleteCategory",
-            arguments: new QueryArguments(
+            arguments: new QueryArguments{
                new QueryArgument<InputCategoryType>(){ Name = "category"}
-            ),
+            },
             resolve: context =>
             {
                var category = context.GetArgument<Category>("category");
@@ -237,8 +241,170 @@ namespace Api.GraphQLTypes
             }
          );
 
+// STOCK
+         Field<StockType>(
+            "addStock",
+            arguments: new QueryArguments
+            {
+               new QueryArgument<InputStockType>(){ Name = "stock"}
+            },
+            resolve: context =>
+            {
+               var stock = context.GetArgument<Stock>("stock");
+               return stockData.AddStock(stock);
+               
+            }
+         );
 
-         
+         Field<StockType>(
+            "updateStock",
+            arguments: new QueryArguments{
+               new QueryArgument<InputStockType>(){ Name = "stock"}
+            },
+            resolve: context =>
+            {
+               var stock = context.GetArgument<Stock>("stock");
+               return stockData.Update(stock);
+            }
+         );
+
+         Field<StockType>(
+            "deleteStock",
+            arguments: new QueryArguments{
+               new QueryArgument<InputStockType>(){ Name = "stock"}
+            },
+            resolve: context =>
+            {
+               var stock = context.GetArgument<Stock>("stock");
+               stockData.Delete(stock);
+               return stock;
+               
+            }
+         );
+
+// STEP
+         Field<StepType>(
+            "addStep",
+            arguments: new QueryArguments
+            {
+               new QueryArgument<InputStepType>(){ Name = "step"}
+            },
+            resolve: context =>
+            {
+               var step = context.GetArgument<Step>("step");
+               return stepData.AddStep(step); 
+               
+            }
+         );
+
+         Field<StepType>(
+            "updateStep",
+            arguments: new QueryArguments{
+               new QueryArgument<InputStepType>(){ Name = "step"}
+            },
+            resolve: context =>
+            {
+               var step = context.GetArgument<Step>("step");
+               return stepData.Update(step);
+            }
+         );
+
+         Field<StepType>(
+            "deleteStep",
+            arguments: new QueryArguments{
+               new QueryArgument<InputStepType>(){ Name = "step"}
+            },
+            resolve: context =>
+            {
+               var step = context.GetArgument<Step>("step");
+               stepData.Delete(step);
+               return step;
+               
+            }
+         );
+
+// WINE
+
+         Field<WineType>(
+            "addWine",
+            arguments: new QueryArguments
+            {
+               new QueryArgument<InputWineType>(){ Name = "wine"}
+            },
+            resolve: context =>
+            {
+               var wine = context.GetArgument<Wine>("wine");
+               return wineData.AddWine(wine);
+               
+            }
+         );
+
+         Field<WineType>(
+            "updateWine",
+            arguments: new QueryArguments{
+               new QueryArgument<InputWineType>(){ Name = "wine"}
+            },
+            resolve: context =>
+            {
+               var wine = context.GetArgument<Wine>("wine");
+               return wineData.Update(wine);
+            }
+         );
+
+         Field<WineType>(
+            "deleteWine",
+            arguments: new QueryArguments{
+               new QueryArgument<InputWineType>(){ Name = "wine"}
+            },
+            resolve: context =>
+            {
+               var wine = context.GetArgument<Wine>("wine");
+               wineData.Delete(wine);
+               return wine;
+               
+            }
+         );
+
+
+         Field<ProductType>(
+            "addProduct",
+            arguments: new QueryArguments
+            {
+               new QueryArgument<InputProductType>(){ Name = "product"}
+            },
+            resolve: context =>
+            {
+               var product = context.GetArgument<Product>("product");
+               return productData.AddProduct(product);
+               
+            }
+         );
+
+         Field<ProductType>(
+            "updateProduct",
+            arguments: new QueryArguments{
+               new QueryArgument<InputProductType>(){ Name = "product"}
+            },
+            resolve: context =>
+            {
+               var product = context.GetArgument<Product>("product");
+               return productData.Update(product);
+            }
+         );
+
+         Field<ProductType>(
+            "deleteProduct",
+            arguments: new QueryArguments{
+               new QueryArgument<InputProductType>(){ Name = "product"}
+            },
+            resolve: context =>
+            {
+               var product = context.GetArgument<Product>("product");
+               productData.Delete(product);
+               return product;
+               
+            }
+         );
       }
    }
 

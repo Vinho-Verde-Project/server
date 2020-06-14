@@ -9,12 +9,11 @@ namespace Api.Data
     public interface IWineData
     {
         Task<IEnumerable<Wine>> GetAllAsync();
-        Wine AddWine(Wine wine);
-        // Task<Wine> GetAsync(int id);
+        Task<Wine> GetAsync(int id);
         System.Threading.Tasks.Task CommitAsync();
-        // void Insert(Wine Wine);
-        // void Update(Wine Wine);
-        // void Delete(Wine Wine);
+        Wine AddWine(Wine wine);
+        Wine Update(Wine wine);
+        void Delete(Wine wine);
     }
     public class WineData : IWineData
     {
@@ -30,13 +29,13 @@ namespace Api.Data
             await _databaseContext.SaveChangesAsync();
         }
 
-        // public async Task<Wine> GetAsync(int id)
-        // {
-        //     return await _databaseContext.Wines
-        //         .Include(e => e.Category)
-        //         .Include(e => e.Task)
-        //         .FirstOrDefaultAsync(c => c.Id == id);
-        // }
+        public async Task<Wine> GetAsync(int id)
+        {
+            return await _databaseContext.Wines
+                .Include(e => e.Category)
+                .Include(e => e.Task)
+                .FirstOrDefaultAsync(c => c.Id == id);
+        }
 
         public async Task<IEnumerable<Wine>> GetAllAsync()
         {
@@ -50,14 +49,17 @@ namespace Api.Data
             return wine;
         }
 
-        // public void Update(Wine wine)
-        // {
-        //     _databaseContext.Wines.Update(wine);
-        // }
+        public Wine Update(Wine wine)
+        {
+            _databaseContext.Wines.Update(wine);
+            _databaseContext.SaveChanges();
+            return wine;
+        }
 
-        // public void Delete(Wine wine)
-        // {
-        //     _databaseContext.Wines.Remove(wine);
-        // }
+        public void Delete(Wine wine)
+        {
+            _databaseContext.Wines.Remove(wine);
+            _databaseContext.SaveChanges();
+        }
     }
 }

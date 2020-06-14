@@ -11,9 +11,9 @@ namespace Api.Data
         Task<IEnumerable<Product>> GetAllAsync();
         Task<Product> GetAsync(int id);
         System.Threading.Tasks.Task CommitAsync();
-        void Insert(Product Product);
-        void Update(Product Product);
-        void Delete(Product Product);
+        Product AddProduct(Product product);
+        Product Update(Product product);
+        void Delete(Product product);
     }
     public class ProductData : IProductData
     {
@@ -42,19 +42,24 @@ namespace Api.Data
             return await _databaseContext.Products.ToListAsync();
         }
 
-        public void Insert(Product Product)
+        public Product AddProduct(Product product)
         {
-            _databaseContext.Products.Add(Product);
+            _databaseContext.Products.Add(product);
+            _databaseContext.SaveChanges();
+            return product;
         }
 
-        public void Update(Product Product)
+        public Product Update(Product product)
         {
-            _databaseContext.Products.Update(Product);
+            _databaseContext.Products.Update(product);
+            _databaseContext.SaveChanges();
+            return product;
         }
 
         public void Delete(Product Product)
         {
             _databaseContext.Products.Remove(Product);
+            _databaseContext.SaveChanges();
         }
     }
 }

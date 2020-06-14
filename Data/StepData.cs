@@ -11,9 +11,9 @@ namespace Api.Data
         Task<IEnumerable<Step>> GetAllAsync();
         Task<Step> GetAsync(int id);
         System.Threading.Tasks.Task CommitAsync();
-        void Insert(Step Step);
-        void Update(Step Step);
-        void Delete(Step Step);
+        Step AddStep(Step step);
+        Step Update(Step step);
+        void Delete(Step step);
     }
     public class StepData : IStepData
     {
@@ -42,19 +42,24 @@ namespace Api.Data
             return await _databaseContext.Steps.ToListAsync();
         }
 
-        public void Insert(Step Step)
+        public Step AddStep(Step step)
         {
-            _databaseContext.Steps.Add(Step);
+            _databaseContext.Steps.Add(step);
+            _databaseContext.SaveChanges();
+            return step;
         }
 
-        public void Update(Step Step)
+        public Step Update(Step step)
         {
-            _databaseContext.Steps.Update(Step);
+            _databaseContext.Steps.Update(step);
+            _databaseContext.SaveChanges();
+            return step;
         }
 
-        public void Delete(Step Step)
+        public void Delete(Step step)
         {
-            _databaseContext.Steps.Remove(Step);
+            _databaseContext.Steps.Remove(step);
+            _databaseContext.SaveChanges();
         }
     }
 }

@@ -11,10 +11,20 @@ namespace Api.GraphQLTypes
          Field(_ => _.Quantity);
          Field(_ => _.Warehouse);
          Field(_ => _.EmployeeId);
-         Field(_ => _.Employee);
          Field(_ => _.EntryDate);
-         Field(_ => _.StockProducts);
-         Field(_ => _.StockWines);
+      }
+   }
+
+   public class InputStockType:InputObjectGraphType<Stock>
+   {
+      public InputStockType()
+      {
+         Name = "InputStockType";
+         Field(_ => _.Id);
+         Field(_ => _.Quantity);
+         Field(_ => _.Warehouse);
+         Field(_ => _.EmployeeId);
+         Field(_ => _.EntryDate);
       }
    }
 
