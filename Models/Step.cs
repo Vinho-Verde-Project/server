@@ -16,7 +16,7 @@ namespace Api.Models
         [Required]
         public string Status { get; set; }
 
-        public float Quantity { get; set; }
+        public double Quantity { get; set; }
 
         [Required]
         public DateTime StartedAt { get; set; }
