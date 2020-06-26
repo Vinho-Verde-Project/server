@@ -33,5 +33,7 @@ namespace Api.Data
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Wine> Wines { get; set; }
+        public DbSet<StockProduct> StockProducts { get; set; }
+        public DbSet<StockWine> StockWines { get; set; }
     }
 }

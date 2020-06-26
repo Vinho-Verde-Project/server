@@ -1,11 +1,12 @@
 using GraphQL.Types;
 using Api.Models;
+using Api.Data;
 
 namespace Api.GraphQLTypes
 {
    public class EmployeeType:ObjectGraphType<Employee>
    {
-      public EmployeeType()
+      public EmployeeType(IRoleData _roleData)
       {
          Field(_ => _.Id);
          Field(_ => _.Username);
@@ -19,6 +20,9 @@ namespace Api.GraphQLTypes
          Field(_ => _.HashedPassword);
          Field(_ => _.CreatedAt);
          Field(_ => _.RoleId);
+         Field<RoleType>(
+            "role",
+            resolve: context => _roleData.GetAsync(context.Source.RoleId));
       }
    }
 

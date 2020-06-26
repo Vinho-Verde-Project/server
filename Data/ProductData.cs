@@ -31,9 +31,16 @@ namespace Api.Data
 
         public async Task<Product> GetAsync(int id)
         {
-            return await _databaseContext.Products
-                .Include(e => e.Category)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            while(true)
+            {
+                try
+                {
+                    return await _databaseContext.Products
+                                .FirstOrDefaultAsync(c => c.Id == id);
+                } catch {
+
+                }
+            }
         }
 
         public async Task<IEnumerable<Product>> GetAllAsync()

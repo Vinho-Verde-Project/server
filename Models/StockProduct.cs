@@ -19,6 +19,6 @@ namespace Api.Models
         public Product Product { get; set; }
 
         [Required]
-        public float MinQantity { get; set; }
+        public double MinQantity { get; set; }
     }   
 }
