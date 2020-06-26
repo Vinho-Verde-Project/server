@@ -52,28 +52,30 @@ namespace Api
          services.AddDbContext<AdmContext>(options =>
          {
             options.UseNpgsql(_admConnectionString);
-         });
+         }, ServiceLifetime.Transient);
 
-         services.AddSingleton<WineType>();
+         services.AddScoped<WineType>();
          services.AddSingleton<InputWineType>();
-         services.AddSingleton<PermissionType>();
+         services.AddScoped<PermissionType>();
          services.AddSingleton<InputPermissionType>();
-         services.AddSingleton<EmployeeType>();
+         services.AddScoped<EmployeeType>();
          services.AddSingleton<InputEmployeeType>();
-         services.AddSingleton<RoleType>();
+         services.AddScoped<RoleType>();
          services.AddSingleton<InputRoleType>();
-         services.AddSingleton<TaskType>();
+         services.AddScoped<TaskType>();
          services.AddSingleton<InputTaskType>();
-         services.AddSingleton<CategoryType>();
+         services.AddScoped<CategoryType>();
          services.AddSingleton<InputCategoryType>();
-         services.AddSingleton<StockType>();
+         services.AddScoped<StockType>();
          services.AddSingleton<InputStockType>();
-         services.AddSingleton<StepType>();
+         services.AddScoped<StepType>();
          services.AddSingleton<InputStepType>();
-         services.AddSingleton<WineType>();
-         services.AddSingleton<InputWineType>();
-         services.AddSingleton<ProductType>();
+         services.AddScoped<ProductType>();
          services.AddSingleton<InputProductType>();
+         services.AddScoped<StockProductType>();
+         services.AddSingleton<InputStockProductType>();
+         services.AddScoped<StockWineType>();
+         services.AddSingleton<InputStockWineType>();
 
          services.AddScoped<ICategoryData, CategoryData>();
          services.AddScoped<IEmployeeData, EmployeeData>();
@@ -84,6 +86,8 @@ namespace Api
          services.AddScoped<IWineData, WineData>();
          services.AddScoped<IStockData, StockData>();
          services.AddScoped<IProductData, ProductData>();
+         services.AddScoped<IStockProductData, StockProductData>();
+         services.AddScoped<IStockWineData, StockWineData>();
          services.AddScoped<RootQuery>();
          services.AddScoped<RootMutation>();
          services.AddScoped<IDependencyResolver>(_ => new FuncDependencyResolver(_.GetRequiredService));

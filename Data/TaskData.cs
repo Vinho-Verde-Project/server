@@ -31,8 +31,12 @@ namespace Api.Data
 
         public async Task<Models.Task> GetAsync(int id)
         {
-            return await _databaseContext.Tasks
-                .FirstOrDefaultAsync(c => c.Id == id);
+            while(true){
+                try{
+                    return await _databaseContext.Tasks
+                                    .FirstOrDefaultAsync(c => c.Id == id);
+                } catch {}
+            }
         }
 
         public async Task<IEnumerable<Models.Task>> GetAllAsync()

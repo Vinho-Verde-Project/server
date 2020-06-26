@@ -31,13 +31,12 @@ namespace Api.Data
 
         public async Task<Stock> GetAsync(int id)
         {
-            return await _databaseContext.Stocks
-                .Include(e => e.Employee)
-                .Include(e => e.StockProducts)
-                .ThenInclude(e => e.Product)
-                .Include(e => e.StockWines)
-                .ThenInclude(e => e.Wine)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            while(true){
+                try {
+                    return await _databaseContext.Stocks
+                        .FirstOrDefaultAsync(c => c.Id == id);
+                } catch {}
+            }
         }
 
         public async Task<IEnumerable<Stock>> GetAllAsync()

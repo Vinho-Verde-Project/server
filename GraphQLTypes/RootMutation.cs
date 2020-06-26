@@ -32,7 +32,9 @@ namespace Api.GraphQLTypes
                            IStockData stockData,
                            IStepData stepData,
                            IWineData wineData,
-                           IProductData productData)
+                           IProductData productData,
+                           IStockProductData stockProductData,
+                           IStockWineData stockWineData)
       {
 // EMPLOYEE
          Field<EmployeeType>(
@@ -365,7 +367,7 @@ namespace Api.GraphQLTypes
             }
          );
 
-
+// PRODUCT
          Field<ProductType>(
             "addProduct",
             arguments: new QueryArguments
@@ -402,6 +404,88 @@ namespace Api.GraphQLTypes
                var product = context.GetArgument<Product>("product");
                productData.Delete(product);
                return product;
+               
+            }
+         );
+
+// StockProduct
+         Field<StockProductType>(
+            "addStockProduct",
+            arguments: new QueryArguments
+            {
+               new QueryArgument<InputStockProductType>(){ Name = "stockProduct"}
+            },
+            resolve: context =>
+            {
+               var stockProduct = context.GetArgument<StockProduct>("stockProduct");
+               return stockProductData.AddStockProduct(stockProduct);
+               
+            }
+         );
+
+         Field<StockProductType>(
+            "updateStockProduct",
+            arguments: new QueryArguments{
+               new QueryArgument<InputStockProductType>(){ Name = "stockProduct"}
+            },
+            resolve: context =>
+            {
+               var stockProduct = context.GetArgument<StockProduct>("stockProduct");
+               return stockProductData.Update(stockProduct);
+            }
+         );
+
+         Field<StockProductType>(
+            "deleteStockProduct",
+            arguments: new QueryArguments{
+               new QueryArgument<InputStockProductType>(){ Name = "stockProduct"}
+            },
+            resolve: context =>
+            {
+               var stockProduct = context.GetArgument<StockProduct>("stockProduct");
+               stockProductData.Delete(stockProduct);
+               return stockProduct;
+               
+            }
+         );
+
+// StockWine
+         Field<StockWineType>(
+            "addStockWine",
+            arguments: new QueryArguments
+            {
+               new QueryArgument<InputStockWineType>(){ Name = "stockWine"}
+            },
+            resolve: context =>
+            {
+               var stockWine = context.GetArgument<StockWine>("stockWine");
+               return stockWineData.AddStockWine(stockWine);
+               
+            }
+         );
+
+         Field<StockWineType>(
+            "updateStockWine",
+            arguments: new QueryArguments{
+               new QueryArgument<InputStockWineType>(){ Name = "stockWine"}
+            },
+            resolve: context =>
+            {
+               var stockWine = context.GetArgument<StockWine>("stockWine");
+               return stockWineData.Update(stockWine);
+            }
+         );
+
+         Field<StockWineType>(
+            "deleteStockWine",
+            arguments: new QueryArguments{
+               new QueryArgument<InputStockWineType>(){ Name = "stockWine"}
+            },
+            resolve: context =>
+            {
+               var stockWine = context.GetArgument<StockWine>("stockWine");
+               stockWineData.Delete(stockWine);
+               return stockWine;
                
             }
          );

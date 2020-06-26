@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,7 +17,7 @@ namespace Api.Models
         [Required]
         public string Status { get; set; }
 
-        public float Quantity { get; set; }
+        public double Quantity { get; set; }
 
         [Required]
         public DateTime StartedAt { get; set; }
@@ -32,5 +33,10 @@ namespace Api.Models
 
         [Required]
         public Task Task { get; set; }
+
+        // public int ProductId { get; set; }
+        // public Product Product { get; set; }
+
+        public ICollection<Product> Products { get; set; }
     }
 }

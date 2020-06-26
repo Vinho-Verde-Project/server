@@ -34,10 +34,14 @@ namespace Api.Data
 
         public async Task<Employee> GetAsync(int id)
         {
-            return await _databaseContext.Employees
-                .AsNoTracking()
-                .Include(e => e.Role)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            while(true){
+                try{
+                    return await _databaseContext.Employees
+                        .AsNoTracking()
+                        .Include(e => e.Role)
+                        .FirstOrDefaultAsync(c => c.Id == id);
+                } catch {}
+            }
         }
 
         public async Task<IEnumerable<Employee>> GetAllAsync()

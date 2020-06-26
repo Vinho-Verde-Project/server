@@ -12,7 +12,7 @@ namespace Api.Models
         public int Id { get; set; }   
 
         [Required]
-        public float Quantity { get; set; }
+        public double Quantity { get; set; }
 
         [Required]
         public string Warehouse { get; set; }
