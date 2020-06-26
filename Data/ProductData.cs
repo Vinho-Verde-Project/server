@@ -33,7 +33,6 @@ namespace Api.Data
         {
             return await _databaseContext.Products
                 .Include(e => e.Category)
-                .Include(e => e.Step)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 

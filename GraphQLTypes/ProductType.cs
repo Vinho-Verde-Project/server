@@ -11,7 +11,6 @@ namespace Api.GraphQLTypes
          Field(_ => _.Desc);
          Field(_ => _.CategoryId);
          Field(_ => _.Type);
-         Field(_ => _.StepId);
 
       }
    }
@@ -25,7 +24,6 @@ namespace Api.GraphQLTypes
          Field(_ => _.Desc);
          Field(_ => _.CategoryId);
          Field(_ => _.Type);
-         Field(_ => _.StepId);
       }
    }
 }

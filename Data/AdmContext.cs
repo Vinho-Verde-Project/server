@@ -17,9 +17,6 @@ namespace Api.Data
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProductCategory>()
-                .HasKey(t => new { t.ProductId, t.CategoryId });
-
             modelBuilder.Entity<StockProduct>()
                 .HasKey(t => new { t.StockId, t.ProductId });
             
