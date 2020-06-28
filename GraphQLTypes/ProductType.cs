@@ -20,6 +20,7 @@ namespace Api.GraphQLTypes
          Field<CategoryType>(
             "category",
             resolve: context => _categoryData.GetAsync(context.Source.CategoryId));
+
       }
    }
 
