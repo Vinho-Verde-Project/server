@@ -22,6 +22,9 @@ namespace Api.Models
         [Required]
         public double Quantity { get; set; }
 
+        [Required]
+        public string Unit { get; set; }
+
         public int EmployeeId { get; set; }
         
         [Required]
