@@ -17,9 +17,6 @@ namespace Api.Data
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProductCategory>()
-                .HasKey(t => new { t.ProductId, t.CategoryId });
-
             modelBuilder.Entity<StockProduct>()
                 .HasKey(t => new { t.StockId, t.ProductId });
             
@@ -36,5 +33,7 @@ namespace Api.Data
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Wine> Wines { get; set; }
+        public DbSet<StockProduct> StockProducts { get; set; }
+        public DbSet<StockWine> StockWines { get; set; }
     }
 }

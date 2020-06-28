@@ -15,7 +15,5 @@ namespace Api.Models
 
         [Required]
         public string Characteristics { get; set; }
-
-        public ICollection<ProductCategory> ProductCategories { get; } = new List<ProductCategory>();
     }
 }

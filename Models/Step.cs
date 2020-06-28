@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -32,5 +33,7 @@ namespace Api.Models
 
         [Required]
         public Task Task { get; set; }
+
+        public ICollection<Product> Products { get; set; }
     }
 }

@@ -1,11 +1,14 @@
 using GraphQL.Types;
 using Api.Models;
+using Api.Data;
 
 namespace Api.GraphQLTypes
 {
    public class StepType:ObjectGraphType<Step>
    {
-      public StepType()
+      public StepType(IEmployeeData _employeeData,
+                      ITaskData _taskData,
+                      IProductData _productData)
       {
          Field(_ => _.Id);
          Field(_ => _.Desc);
@@ -15,6 +18,16 @@ namespace Api.GraphQLTypes
          Field(_ => _.EndedAt);
          Field(_ => _.EmployeeId);
          Field(_ => _.TaskId);
+         // Field(_ => _.ProductId);
+         Field<EmployeeType>(
+            "employee",
+            resolve: context => _employeeData.GetAsync(context.Source.EmployeeId));
+         Field<TaskType>(
+            "task",
+            resolve: context => _taskData.GetAsync(context.Source.TaskId));
+         // Field<ProductType>(
+         //    "product",
+         //    resolve: context => _productData.GetAsync(context.Source.ProductId));
       }
    }
 
@@ -31,6 +44,7 @@ namespace Api.GraphQLTypes
          Field(_ => _.EndedAt);
          Field(_ => _.EmployeeId);
          Field(_ => _.TaskId);
+         // Field<Product>(_ => _.Products);
       }
    }
 

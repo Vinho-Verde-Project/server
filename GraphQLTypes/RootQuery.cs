@@ -1,18 +1,11 @@
 using GraphQL.Types;
 using Api.Data;
+using System;
 
 namespace Api.GraphQLTypes
 {
    public class RootQuery : ObjectGraphType
    {
-
-      // public RootQuery(IWineData _wineData)
-      // {
-      //    Field<ListGraphType<WineType>>("wines", resolve: context =>
-      //    {
-      //       return _wineData.GetAllAsync();
-      //    });
-      // }
 
       public RootQuery(IEmployeeData _employeeData,
                         IRoleData _roleData,
@@ -137,8 +130,14 @@ namespace Api.GraphQLTypes
             }, 
             resolve: context =>
             {
-               int id = context.GetArgument<int>("id");
-               return _stockData.GetAsync(id);
+               // try{
+                  int id = context.GetArgument<int>("id");
+                  Console.WriteLine("entrou");
+                  return _stockData.GetAsync(id);
+               // } catch (Exception error) {
+                  // Console.WriteLine(error);
+                  // return null;
+               // }
             });
 
 // STEPS
