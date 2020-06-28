@@ -3,15 +3,17 @@ using System;
 using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Api.Migrations
 {
     [DbContext(typeof(AdmContext))]
-    partial class AdmContextModelSnapshot : ModelSnapshot
+    [Migration("20200628215831_StepWithOnlyOneProduct")]
+    partial class StepWithOnlyOneProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,7 +210,7 @@ namespace Api.Migrations
                         .HasColumnName("ended_at")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnName("product_id")
                         .HasColumnType("integer");
 
@@ -457,9 +459,7 @@ namespace Api.Migrations
                     b.HasOne("Api.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .HasConstraintName("fk_step_product_product_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("fk_step_product_product_id");
 
                     b.HasOne("Api.Models.Task", "Task")
                         .WithMany()

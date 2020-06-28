@@ -21,9 +21,6 @@ namespace Api.Models
         [Required]
         public string Type { get; set; }
 
-        public int StepId { get; set; }
-        public Step Step { get; set; }
-
         public ICollection<StockProduct> StockProducts { get; } = new List<StockProduct>();
     }
 }
