@@ -33,13 +33,12 @@ namespace Api.Data
 
         public async Task<IEnumerable<StockProduct>> GetProductsAsync(int id)
         {
-            try{
-                return await _databaseContext.StockProducts
-                        .Where(e => e.StockId == id)
-                        .ToListAsync();
-            } catch (Exception error) {
-                Console.WriteLine(error);
-                return null;
+            while(true){
+                try{
+                    return await _databaseContext.StockProducts
+                            .Where(e => e.StockId == id)
+                            .ToListAsync();
+                } catch {}
             }
         }
 
@@ -50,9 +49,7 @@ namespace Api.Data
                   return await _databaseContext.StockProducts
                            .Where(e => e.ProductId == id)
                            .ToListAsync();
-               } catch {
-                  
-               }
+               } catch {}
             }
         }
 

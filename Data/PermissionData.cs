@@ -31,9 +31,15 @@ namespace Api.Data
 
         public async Task<Permission> GetAsync(int id)
         {
-            return await _databaseContext.Permissions
-                .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.Id == id);
+            while(true)
+            {
+                try
+                {
+                    return await _databaseContext.Permissions
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(c => c.Id == id);
+                } catch {}
+            }
         }
 
         public async Task<IEnumerable<Permission>> GetAllAsync()

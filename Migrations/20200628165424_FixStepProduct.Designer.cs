@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.Migrations
 {
     [DbContext(typeof(AdmContext))]
-    [Migration("20200626122522_CorrectProductsAndCategories")]
-    partial class CorrectProductsAndCategories
+    [Migration("20200628165424_FixStepProduct")]
+    partial class FixStepProduct
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -262,10 +262,6 @@ namespace Api.Migrations
                         .HasColumnName("entry_date")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<double>("Quantity")
-                        .HasColumnName("quantity")
-                        .HasColumnType("double precision");
-
                     b.Property<string>("Warehouse")
                         .IsRequired()
                         .HasColumnName("warehouse")
@@ -290,9 +286,13 @@ namespace Api.Migrations
                         .HasColumnName("product_id")
                         .HasColumnType("integer");
 
-                    b.Property<float>("MinQantity")
+                    b.Property<double>("MinQantity")
                         .HasColumnName("min_qantity")
-                        .HasColumnType("real");
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("Qantity")
+                        .HasColumnName("qantity")
+                        .HasColumnType("double precision");
 
                     b.HasKey("StockId", "ProductId")
                         .HasName("pk_stock_product");
@@ -330,13 +330,14 @@ namespace Api.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<DateTime>("EndedAt")
+                    b.Property<string>("EndedAt")
                         .HasColumnName("ended_at")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("StartedAt")
+                    b.Property<string>("StartedAt")
+                        .IsRequired()
                         .HasColumnName("started_at")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("text");
 
                     b.Property<string>("Status")
                         .IsRequired()

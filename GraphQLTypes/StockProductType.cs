@@ -8,10 +8,16 @@ namespace Api.GraphQLTypes
    public class StockProductType:ObjectGraphType<StockProduct>
    {
       public StockProductType(IProductData _productData,
-                              IStockData _stockData)
+                              IStockData _stockData,
+                              IEmployeeData _employeeData)
       {
          Field(_ => _.StockId);
          Field(_ => _.ProductId);
+         Field(_ => _.MinQantity);
+         Field(_ => _.Quantity);
+         Field(_ => _.EmployeeId);
+         Field(_ => _.EntryDate);
+         Field(_ => _.Unit);
          Field<ProductType>(
             "product",
             resolve: context => _productData.GetAsync(context.Source.ProductId)
@@ -20,7 +26,10 @@ namespace Api.GraphQLTypes
             "stock",
             resolve: context => _stockData.GetAsync(context.Source.StockId)
          );
-         Field(_ => _.MinQantity);
+         Field<EmployeeType>(
+            "employee",
+            resolve: context => _employeeData.GetAsync(context.Source.EmployeeId)
+         );
       }
    }
 
@@ -32,6 +41,10 @@ namespace Api.GraphQLTypes
          Field(_ => _.StockId);
          Field(_ => _.ProductId);
          Field(_ => _.MinQantity);
+         Field(_ => _.Quantity);
+         Field(_ => _.EmployeeId);
+         Field(_ => _.EntryDate);
+         Field(_ => _.Unit);
       }
    }
 

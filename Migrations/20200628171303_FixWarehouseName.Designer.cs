@@ -3,15 +3,17 @@ using System;
 using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Api.Migrations
 {
     [DbContext(typeof(AdmContext))]
-    partial class AdmContextModelSnapshot : ModelSnapshot
+    [Migration("20200628171303_FixWarehouseName")]
+    partial class FixWarehouseName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,11 +290,6 @@ namespace Api.Migrations
                         .HasColumnName("quantity")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("Unit")
-                        .IsRequired()
-                        .HasColumnName("unit")
-                        .HasColumnType("text");
-
                     b.HasKey("StockId", "ProductId")
                         .HasName("pk_stock_product");
 
@@ -326,11 +323,6 @@ namespace Api.Migrations
                     b.Property<double>("Quantity")
                         .HasColumnName("quantity")
                         .HasColumnType("double precision");
-
-                    b.Property<string>("Unit")
-                        .IsRequired()
-                        .HasColumnName("unit")
-                        .HasColumnType("text");
 
                     b.HasKey("StockId", "WineId")
                         .HasName("pk_stock_wine");

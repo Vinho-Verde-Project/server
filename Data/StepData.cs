@@ -31,11 +31,16 @@ namespace Api.Data
 
         public async Task<Step> GetAsync(int id)
         {
-            return await _databaseContext.Steps
-                .Include(e => e.Employee)
-                .Include(t => t.Task)
-                .Include(t => t.Products)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            while(true)
+            {
+                try
+                {
+                    return await _databaseContext.Steps
+                        .Include(e => e.Employee)
+                        .Include(t => t.Task)
+                        .FirstOrDefaultAsync(c => c.Id == id);
+                } catch {}
+            }
         }
 
         public async Task<IEnumerable<Step>> GetAllAsync()
@@ -45,9 +50,13 @@ namespace Api.Data
 
         public Step AddStep(Step step)
         {
+            try{
             _databaseContext.Steps.Add(step);
             _databaseContext.SaveChanges();
             return step;
+            } catch (Exception error) {
+                Console.WriteLine(error);
+            }
         }
 
         public Step Update(Step step)
