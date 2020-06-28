@@ -38,6 +38,7 @@ namespace Api.Data
                     return await _databaseContext.Steps
                         .Include(e => e.Employee)
                         .Include(t => t.Task)
+                        .Include(b => b.Products)
                         .FirstOrDefaultAsync(c => c.Id == id);
                 } catch {}
             }

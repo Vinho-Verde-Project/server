@@ -6,7 +6,8 @@ namespace Api.GraphQLTypes
 {
    public class StepType:ObjectGraphType<Step>
    {
-      public StepType(IEmployeeData _employeeData,
+      public StepType(IStepData _stepData,
+                      IEmployeeData _employeeData,
                       ITaskData _taskData)
       {
          Field(_ => _.Id);
@@ -17,7 +18,7 @@ namespace Api.GraphQLTypes
          Field(_ => _.EndedAt);
          Field(_ => _.EmployeeId);
          Field(_ => _.TaskId);
-         Field<ProductType>("products");
+         Field<ListGraphType<ProductType>>("products");
          Field<EmployeeType>(
             "employee",
             resolve: context => _employeeData.GetAsync(context.Source.EmployeeId));
