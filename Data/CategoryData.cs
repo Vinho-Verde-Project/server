@@ -33,8 +33,14 @@ namespace Api.Data
 
         public async Task<Category> GetAsync(int id)
         {
-            return await _databaseContext.Categories
-                .FirstOrDefaultAsync(c => c.Id == id);
+            while(true)
+            {
+                try
+                {
+                    return await _databaseContext.Categories
+                                    .FirstOrDefaultAsync(c => c.Id == id);
+                } catch {}
+            }
         }
 
         public async Task<IEnumerable<Category>> GetAllAsync()

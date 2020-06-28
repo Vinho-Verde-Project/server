@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using Api.Models;
 
 namespace Api.Migrations
 {
@@ -233,6 +234,10 @@ namespace Api.Migrations
                     b.Property<int>("TaskId")
                         .HasColumnName("task_id")
                         .HasColumnType("integer");
+                    
+                    b.Property<Product>("Products")
+                        .HasColumnName("products")
+                        .HasColumnType("product");
 
                     b.HasKey("Id")
                         .HasName("pk_step");

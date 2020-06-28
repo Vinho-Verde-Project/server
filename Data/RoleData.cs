@@ -31,10 +31,16 @@ namespace Api.Data
 
         public async Task<Role> GetAsync(int id)
         {
-            return await _databaseContext.Roles
-                .AsNoTracking()
-                .Include(e => e.Permission)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            while(true)
+            {
+                try
+                {
+                    return await _databaseContext.Roles
+                        .AsNoTracking()
+                        .Include(e => e.Permission)
+                        .FirstOrDefaultAsync(c => c.Id == id);
+                } catch{} 
+            }
         }
 
         public async Task<IEnumerable<Role>> GetAllAsync()

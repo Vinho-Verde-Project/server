@@ -44,7 +44,7 @@ namespace Api.GraphQLTypes
          Field(_ => _.EndedAt);
          Field(_ => _.EmployeeId);
          Field(_ => _.TaskId);
-         // Field<Product>(_ => _.Products);
+         Field<ListGraphType<InputProductType>>("products");
       }
    }
 

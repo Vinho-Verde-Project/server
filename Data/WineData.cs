@@ -31,10 +31,16 @@ namespace Api.Data
 
         public async Task<Wine> GetAsync(int id)
         {
-            return await _databaseContext.Wines
-                .Include(e => e.Category)
-                .Include(e => e.Task)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            while(true)
+            {
+                try
+                {
+                    return await _databaseContext.Wines
+                        .Include(e => e.Category)
+                        .Include(e => e.Task)
+                        .FirstOrDefaultAsync(c => c.Id == id);
+                } catch {}
+            }
         }
 
         public async Task<IEnumerable<Wine>> GetAllAsync()

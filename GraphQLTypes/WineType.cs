@@ -7,7 +7,8 @@ namespace Api.GraphQLTypes
    public class WineType:ObjectGraphType<Wine>
    {
       public WineType(IStockWineData _stockWineData,
-                      ICategoryData _categoryData)
+                      ICategoryData _categoryData,
+                      ITaskData _taskData)
       {
          Field(_ => _.Id);
          Field(_ => _.Batch);
@@ -21,6 +22,9 @@ namespace Api.GraphQLTypes
          Field<CategoryType>(
             "category",
             resolve: context => _categoryData.GetAsync(context.Source.CategoryId));
+         Field<TaskType>(
+            "task",
+            resolve: context => _taskData.GetAsync(context.Source.TaskId));
       }
    }
 
