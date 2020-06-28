@@ -34,6 +34,8 @@ namespace Api.Models
         [Required]
         public Task Task { get; set; }
 
+        public int ProductId { get; set; }
+
         public Product Product { get; set; }
     }
 }
