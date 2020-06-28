@@ -34,6 +34,6 @@ namespace Api.Models
         [Required]
         public Task Task { get; set; }
 
-        public ICollection<Product> Products { get; set; }
+        public Product Product { get; set; }
     }
 }
