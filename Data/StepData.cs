@@ -53,9 +53,9 @@ namespace Api.Data
         {
             try{
                 _databaseContext.Steps.Add(step);
-                foreach (var prod in step.Products){
-                    _databaseContext.Entry(prod).State = EntityState.Detached;
-                }
+                //foreach (var prod in step.Products){
+                //    _databaseContext.Entry(prod).State = EntityState.Detached;
+                //}
                 _databaseContext.SaveChanges();
                 return step;
             } catch (Exception error) {

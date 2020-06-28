@@ -17,9 +17,10 @@ namespace Api.Data
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Step>()
-                .HasMany(p => p.Products)
-                .WithOne();
+            modelBuilder.Entity<Product>()
+                .HasOne(s => s.Step)
+                .WithMany(p => p.Products)
+                .HasForeignKey(e => e.StepId);
 
             modelBuilder.Entity<StockProduct>()
                 .HasKey(t => new { t.StockId, t.ProductId });
