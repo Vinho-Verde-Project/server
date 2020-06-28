@@ -31,8 +31,5 @@ namespace Api.Models
         public Employee Employee { get; set; }
         
         public DateTime EntryDate { get; set; }
-
-        [Required]
-        public string Warehouse { get; set; }
     }   
 }
