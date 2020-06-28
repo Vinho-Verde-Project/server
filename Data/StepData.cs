@@ -50,9 +50,13 @@ namespace Api.Data
 
         public Step AddStep(Step step)
         {
+            try{
             _databaseContext.Steps.Add(step);
             _databaseContext.SaveChanges();
             return step;
+            } catch (Exception error) {
+                Console.WriteLine(error);
+            }
         }
 
         public Step Update(Step step)
