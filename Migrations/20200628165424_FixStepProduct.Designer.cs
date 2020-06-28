@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.Migrations
 {
     [DbContext(typeof(AdmContext))]
-    [Migration("20200628155939_CorrectStepProduct")]
-    partial class CorrectStepProduct
+    [Migration("20200628165424_FixStepProduct")]
+    partial class FixStepProduct
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -153,10 +153,6 @@ namespace Api.Migrations
                         .HasColumnName("step_id")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StockId")
-                        .HasColumnName("stock_id")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnName("type")
@@ -170,9 +166,6 @@ namespace Api.Migrations
 
                     b.HasIndex("StepId")
                         .HasName("ix_product_step_id");
-
-                    b.HasIndex("StockId")
-                        .HasName("ix_product_stock_id");
 
                     b.ToTable("product");
                 });
@@ -269,10 +262,6 @@ namespace Api.Migrations
                         .HasColumnName("entry_date")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<double>("Quantity")
-                        .HasColumnName("quantity")
-                        .HasColumnType("double precision");
-
                     b.Property<string>("Warehouse")
                         .IsRequired()
                         .HasColumnName("warehouse")
@@ -299,6 +288,10 @@ namespace Api.Migrations
 
                     b.Property<double>("MinQantity")
                         .HasColumnName("min_qantity")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("Qantity")
+                        .HasColumnName("qantity")
                         .HasColumnType("double precision");
 
                     b.HasKey("StockId", "ProductId")
@@ -337,13 +330,14 @@ namespace Api.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<DateTime>("EndedAt")
+                    b.Property<string>("EndedAt")
                         .HasColumnName("ended_at")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("StartedAt")
+                    b.Property<string>("StartedAt")
+                        .IsRequired()
                         .HasColumnName("started_at")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("text");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -422,13 +416,6 @@ namespace Api.Migrations
                         .WithMany("Products")
                         .HasForeignKey("StepId")
                         .HasConstraintName("fk_product_step_step_id");
-
-                    b.HasOne("Api.Models.Stock", "Stock")
-                        .WithMany()
-                        .HasForeignKey("StockId")
-                        .HasConstraintName("fk_product_stock_stock_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Api.Models.Role", b =>

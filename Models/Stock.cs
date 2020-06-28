@@ -11,18 +11,7 @@ namespace Api.Models
         [Key]
         public int Id { get; set; }   
 
-        [Required]
-        public double Quantity { get; set; }
-
-        [Required]
-        public string Warehouse { get; set; }
-
-        public int EmployeeId { get; set; }
-        
-        [Required]
-        public Employee Employee { get; set; }
-        
-        public DateTime EntryDate { get; set; }
+        public string Title { get; set; }
 
         public ICollection<StockProduct> StockProducts { get; } = new List<StockProduct>();
 

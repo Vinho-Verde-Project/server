@@ -151,10 +151,6 @@ namespace Api.Migrations
                         .HasColumnName("step_id")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StockId")
-                        .HasColumnName("stock_id")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnName("type")
@@ -168,9 +164,6 @@ namespace Api.Migrations
 
                     b.HasIndex("StepId")
                         .HasName("ix_product_step_id");
-
-                    b.HasIndex("StockId")
-                        .HasName("ix_product_stock_id");
 
                     b.ToTable("product");
                 });
@@ -259,28 +252,12 @@ namespace Api.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnName("employee_id")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("EntryDate")
-                        .HasColumnName("entry_date")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<double>("Quantity")
-                        .HasColumnName("quantity")
-                        .HasColumnType("double precision");
-
-                    b.Property<string>("Warehouse")
-                        .IsRequired()
-                        .HasColumnName("warehouse")
+                    b.Property<string>("Title")
+                        .HasColumnName("title")
                         .HasColumnType("text");
 
                     b.HasKey("Id")
                         .HasName("pk_stock");
-
-                    b.HasIndex("EmployeeId")
-                        .HasName("ix_stock_employee_id");
 
                     b.ToTable("stock");
                 });
@@ -295,12 +272,32 @@ namespace Api.Migrations
                         .HasColumnName("product_id")
                         .HasColumnType("integer");
 
+                    b.Property<int>("EmployeeId")
+                        .HasColumnName("employee_id")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("EntryDate")
+                        .HasColumnName("entry_date")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<double>("MinQantity")
                         .HasColumnName("min_qantity")
                         .HasColumnType("double precision");
 
+                    b.Property<double>("Quantity")
+                        .HasColumnName("quantity")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Warehouse")
+                        .IsRequired()
+                        .HasColumnName("warehouse")
+                        .HasColumnType("text");
+
                     b.HasKey("StockId", "ProductId")
                         .HasName("pk_stock_product");
+
+                    b.HasIndex("EmployeeId")
+                        .HasName("ix_stock_product_employee_id");
 
                     b.HasIndex("ProductId")
                         .HasName("ix_stock_product_product_id");
@@ -318,8 +315,28 @@ namespace Api.Migrations
                         .HasColumnName("wine_id")
                         .HasColumnType("integer");
 
+                    b.Property<int>("EmployeeId")
+                        .HasColumnName("employee_id")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("EntryDate")
+                        .HasColumnName("entry_date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnName("quantity")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Warehouse")
+                        .IsRequired()
+                        .HasColumnName("warehouse")
+                        .HasColumnType("text");
+
                     b.HasKey("StockId", "WineId")
                         .HasName("pk_stock_wine");
+
+                    b.HasIndex("EmployeeId")
+                        .HasName("ix_stock_wine_employee_id");
 
                     b.HasIndex("WineId")
                         .HasName("ix_stock_wine_wine_id");
@@ -421,13 +438,6 @@ namespace Api.Migrations
                         .WithMany("Products")
                         .HasForeignKey("StepId")
                         .HasConstraintName("fk_product_step_step_id");
-
-                    b.HasOne("Api.Models.Stock", "Stock")
-                        .WithMany()
-                        .HasForeignKey("StockId")
-                        .HasConstraintName("fk_product_stock_stock_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Api.Models.Role", b =>
@@ -457,18 +467,15 @@ namespace Api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Api.Models.Stock", b =>
+            modelBuilder.Entity("Api.Models.StockProduct", b =>
                 {
                     b.HasOne("Api.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
-                        .HasConstraintName("fk_stock_employee_employee_id")
+                        .HasConstraintName("fk_stock_product_employee_employee_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Api.Models.StockProduct", b =>
-                {
                     b.HasOne("Api.Models.Product", "Product")
                         .WithMany("StockProducts")
                         .HasForeignKey("ProductId")
@@ -486,6 +493,13 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Models.StockWine", b =>
                 {
+                    b.HasOne("Api.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .HasConstraintName("fk_stock_wine_employee_employee_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Api.Models.Stock", "Stock")
                         .WithMany("StockWines")
                         .HasForeignKey("StockId")

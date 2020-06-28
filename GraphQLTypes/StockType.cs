@@ -14,13 +14,9 @@ namespace Api.GraphQLTypes
                         IStockWineData _stockWineData)
       {
          Field(_ => _.Id);
-         Field(_ => _.Quantity);
-         Field(_ => _.Warehouse);
-         Field(_ => _.EmployeeId);
-         Field(_ => _.EntryDate);
-         Field<EmployeeType>(
-            "employee",
-            resolve: context => _employeeData.GetAsync(context.Source.EmployeeId));
+         //Field<EmployeeType>(
+         //   "employee",
+         //   resolve: context => _employeeData.GetAsync(context.Source.EmployeeId));
          Field<ListGraphType<StockProductType>>(
             "stockProduct",
             resolve: context => _stockProductData.GetProductsAsync(context.Source.Id));
@@ -36,10 +32,6 @@ namespace Api.GraphQLTypes
       {
          Name = "InputStockType";
          Field(_ => _.Id);
-         Field(_ => _.Quantity);
-         Field(_ => _.Warehouse);
-         Field(_ => _.EmployeeId);
-         Field(_ => _.EntryDate);
       }
    }
 

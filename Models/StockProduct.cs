@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,5 +21,18 @@ namespace Api.Models
 
         [Required]
         public double MinQantity { get; set; }
+
+        [Required]
+        public double Quantity { get; set; }
+
+        public int EmployeeId { get; set; }
+        
+        [Required]
+        public Employee Employee { get; set; }
+        
+        public DateTime EntryDate { get; set; }
+
+        [Required]
+        public string Warehouse { get; set; }
     }   
 }

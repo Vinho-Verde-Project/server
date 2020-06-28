@@ -6,13 +6,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Api.Models;
 
 namespace Api.Migrations
 {
     [DbContext(typeof(AdmContext))]
-    [Migration("20200626122522_CorrectProductsAndCategories")]
-    partial class CorrectProductsAndCategories
+    [Migration("20200628170113_FixStock")]
+    partial class FixStock
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -234,10 +233,6 @@ namespace Api.Migrations
                     b.Property<int>("TaskId")
                         .HasColumnName("task_id")
                         .HasColumnType("integer");
-                    
-                    b.Property<Product>("Products")
-                        .HasColumnName("products")
-                        .HasColumnType("product");
 
                     b.HasKey("Id")
                         .HasName("pk_step");
@@ -259,28 +254,12 @@ namespace Api.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnName("employee_id")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("EntryDate")
-                        .HasColumnName("entry_date")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<double>("Quantity")
-                        .HasColumnName("quantity")
-                        .HasColumnType("double precision");
-
-                    b.Property<string>("Warehouse")
-                        .IsRequired()
-                        .HasColumnName("warehouse")
+                    b.Property<string>("Title")
+                        .HasColumnName("title")
                         .HasColumnType("text");
 
                     b.HasKey("Id")
                         .HasName("pk_stock");
-
-                    b.HasIndex("EmployeeId")
-                        .HasName("ix_stock_employee_id");
 
                     b.ToTable("stock");
                 });
@@ -295,12 +274,32 @@ namespace Api.Migrations
                         .HasColumnName("product_id")
                         .HasColumnType("integer");
 
-                    b.Property<float>("MinQantity")
+                    b.Property<int>("EmployeeId")
+                        .HasColumnName("employee_id")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("EntryDate")
+                        .HasColumnName("entry_date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<double>("MinQantity")
                         .HasColumnName("min_qantity")
-                        .HasColumnType("real");
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnName("quantity")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Warehouse")
+                        .IsRequired()
+                        .HasColumnName("warehouse")
+                        .HasColumnType("text");
 
                     b.HasKey("StockId", "ProductId")
                         .HasName("pk_stock_product");
+
+                    b.HasIndex("EmployeeId")
+                        .HasName("ix_stock_product_employee_id");
 
                     b.HasIndex("ProductId")
                         .HasName("ix_stock_product_product_id");
@@ -318,8 +317,28 @@ namespace Api.Migrations
                         .HasColumnName("wine_id")
                         .HasColumnType("integer");
 
+                    b.Property<int>("EmployeeId")
+                        .HasColumnName("employee_id")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("EntryDate")
+                        .HasColumnName("entry_date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnName("quantity")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Warehouse")
+                        .IsRequired()
+                        .HasColumnName("warehouse")
+                        .HasColumnType("text");
+
                     b.HasKey("StockId", "WineId")
                         .HasName("pk_stock_wine");
+
+                    b.HasIndex("EmployeeId")
+                        .HasName("ix_stock_wine_employee_id");
 
                     b.HasIndex("WineId")
                         .HasName("ix_stock_wine_wine_id");
@@ -335,13 +354,14 @@ namespace Api.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<DateTime>("EndedAt")
+                    b.Property<string>("EndedAt")
                         .HasColumnName("ended_at")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("StartedAt")
+                    b.Property<string>("StartedAt")
+                        .IsRequired()
                         .HasColumnName("started_at")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("text");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -449,18 +469,15 @@ namespace Api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Api.Models.Stock", b =>
+            modelBuilder.Entity("Api.Models.StockProduct", b =>
                 {
                     b.HasOne("Api.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
-                        .HasConstraintName("fk_stock_employee_employee_id")
+                        .HasConstraintName("fk_stock_product_employee_employee_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Api.Models.StockProduct", b =>
-                {
                     b.HasOne("Api.Models.Product", "Product")
                         .WithMany("StockProducts")
                         .HasForeignKey("ProductId")
@@ -478,6 +495,13 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Api.Models.StockWine", b =>
                 {
+                    b.HasOne("Api.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .HasConstraintName("fk_stock_wine_employee_employee_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Api.Models.Stock", "Stock")
                         .WithMany("StockWines")
                         .HasForeignKey("StockId")

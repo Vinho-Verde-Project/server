@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Api.Migrations
 {
-    public partial class CorrectProductsAndCategories : Migration
+    public partial class FixStepProduct : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,6 +13,10 @@ namespace Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "product_category");
+
+            migrationBuilder.DropColumn(
+                name: "quantity",
+                table: "stock");
 
             migrationBuilder.AlterColumn<string>(
                 name: "shelf_life",
@@ -28,12 +32,32 @@ namespace Api.Migrations
                 oldClrType: typeof(DateTime),
                 oldType: "timestamp without time zone");
 
+            migrationBuilder.AlterColumn<string>(
+                name: "started_at",
+                table: "task",
+                nullable: false,
+                oldClrType: typeof(DateTime),
+                oldType: "timestamp without time zone");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "ended_at",
+                table: "task",
+                nullable: true,
+                oldClrType: typeof(DateTime),
+                oldType: "timestamp without time zone");
+
             migrationBuilder.AlterColumn<double>(
-                name: "quantity",
-                table: "stock",
+                name: "min_qantity",
+                table: "stock_product",
                 nullable: false,
                 oldClrType: typeof(float),
                 oldType: "real");
+
+            migrationBuilder.AddColumn<double>(
+                name: "qantity",
+                table: "stock_product",
+                nullable: false,
+                defaultValue: 0.0);
 
             migrationBuilder.AlterColumn<double>(
                 name: "quantity",
@@ -64,6 +88,10 @@ namespace Api.Migrations
                 name: "fk_product_step_step_id",
                 table: "product");
 
+            migrationBuilder.DropColumn(
+                name: "qantity",
+                table: "stock_product");
+
             migrationBuilder.AlterColumn<DateTime>(
                 name: "shelf_life",
                 table: "wine",
@@ -78,12 +106,34 @@ namespace Api.Migrations
                 nullable: false,
                 oldClrType: typeof(string));
 
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "started_at",
+                table: "task",
+                type: "timestamp without time zone",
+                nullable: false,
+                oldClrType: typeof(string));
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "ended_at",
+                table: "task",
+                type: "timestamp without time zone",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldNullable: true);
+
             migrationBuilder.AlterColumn<float>(
+                name: "min_qantity",
+                table: "stock_product",
+                type: "real",
+                nullable: false,
+                oldClrType: typeof(double));
+
+            migrationBuilder.AddColumn<float>(
                 name: "quantity",
                 table: "stock",
                 type: "real",
                 nullable: false,
-                oldClrType: typeof(double));
+                defaultValue: 0f);
 
             migrationBuilder.AlterColumn<float>(
                 name: "quantity",
